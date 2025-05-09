@@ -96,10 +96,10 @@ $db['default'] = array(
 );
 
 $db['db3'] = array(
-	'dsn'	=> 'pgsql:host=192.168.50.90;port=5432;dbname=sam_live',
+	'dsn'	=> 'pgsql:host=172.19.21.2;port=5432;dbname=eweb2',
 	'hostname' => '',
-	'username' => 'postgres',
-	'password' => '<uX42)#YQ#8D;t]/',
+	'username' => 'ssm',
+	'password' => '!!!super',
 	'database' => '',
 	'dbdriver' => 'pdo',
 	'dbprefix' => '',

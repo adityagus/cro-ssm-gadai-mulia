@@ -8,41 +8,39 @@ class C_login extends CI_Controller {
 		$this->CI =& get_instance();
 	}
 
-  public function index()
-  {
-    // $this->load->view('v_login');//version old
-    $this->load->view('v_login_v2');//testing version 2
-  }
+  	public function index(){
+    	$this->load->view('v_login_v2');
+  	}
 
-  function aksilogin()
-	{
+  	function aksilogin(){
 		$user = $this->input->post('user');
 		$pass = $this->input->post('pass');
-		$cek = $this->M_login->cek_login_v2($user,$pass)->num_rows();
-		$a = $this->M_login->get_data_v2($user,$pass)->row();
-		// print_r($a);
-		// die();
+		$cek = $this->M_login->cek_login($user);		
 
-		if($cek > 0){
-			$datasession = array(
-				'nama' => $a->nama,
-				'user' => $a->username,
-				'idgrup' => $a->idgrup,
-				'status' => "login"
-			);
-			// var_dump($datasession);
-			// die();
+		if($cek){
+			if(crypt($pass,$cek[0]->password) == $cek[0]->password){
+				$nama = $cek[0]->nm_depan;
+                if($cek[0]->nm_belakang) $nama .= ' '.$cek[0]->nm_belakang;
 
-			$this->session->set_userdata($datasession);
-			// redirect(base_url('C_cro/viewquest'));//Version Old //not used
-			// redirect(base_url('C_cro/home'));//used //version old
-			redirect(base_url('C_cro/loading_page'));//used //version new
+				$datasession = [
+					'nama' => $nama,
+					'user' => $cek[0]->username,
+					'idgrup' => $cek[0]->kd_jabatan,
+					'status' => "login"
+				];
 
-		}else{
-			// $this->CI->session->set_flashdata('gagal','Oops... Username/password salah');//old not used
+				$this->session->set_userdata($datasession);
+				redirect(base_url('C_cro/loading_page'));
+			}
+			else{
+				echo "<script>alert('Oops... Username/Password Salah!!!Cek');</script>";
+        		redirect('C_login','refresh');
+			}
+
+		}
+		else{
 			echo "<script>alert('Oops... Username/Password Salah!!!');</script>";
         	redirect('C_login','refresh');
-			// redirect(base_url('C_login'));//old not used
 		}
 	}
 

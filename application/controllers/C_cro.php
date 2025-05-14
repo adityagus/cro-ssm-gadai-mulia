@@ -284,7 +284,7 @@ class C_cro extends CI_Controller {
 		}else{//berarti tidak ada data
 			//with action
 			$custslskws = $this->M_cro->get_custmonthslskws($bln,$thn)->result();
-			$custservkws = $this->M_cro->get_custmonthservkws($bln,$thn)->result();
+			// $custservkws = $this->M_cro->get_custmonthservkws($bln,$thn)->result(); //Tidak dipake
 			foreach($custslskws as $a){
 				$telp1 = null;
 				$telp2 = null;
@@ -325,55 +325,55 @@ class C_cro extends CI_Controller {
 				);
 				$this->M_cro->add_custslskws($x);
 			}
-			foreach ($custservkws as $a) {
-				$telp1 = null;
-				$telp2 = null;
-				$hp = null;
-				$tlpwo = null;
-				if(substr($a->telepon_1,0,2) == '08'){
-					$telp1 = $a->telepon_1;
-				}
-				if(substr($a->telepon_2,0,2) == '08'){
-					$telp2 = $a->telepon_2;
-				}
-				if(substr($a->hp,0,2) == '08'){
-					$hp = $a->hp;
-				}
-				if(substr($a->alamat,0,2) == '08'){
-					$tlpwo = $a->alamat;
-				}
-				//start replace phone just integer
-				$rplace_tlp1 = str_replace(' ','',$telp1);
-				$fix_telp1 = str_replace('-','',$rplace_tlp1);
-				$rplace_tlp2 = str_replace(' ','',$telp2);
-				$fix_telp2 = str_replace('-','',$rplace_tlp2);
-				$rplace_hp = str_replace(' ','',$hp);
-				$fix_hp = str_replace('-','',$rplace_hp);
-				$rplace_tlpwo = str_replace(' ','',$tlpwo);
-				$fix_tlpwo = str_replace('-','',$rplace_tlpwo);
-				//end replace phone just integer
-				$ex = explode(".", $a->discount);
-				$diskon = $ex[0];
-				$date = date('Y-m-d',$a->date_sinv);
-				$tglwo = date('Y-m-d',$a->date_so);
-				$x= array(
-						'tgl_surv' => null,
-						'id_comp' => $a->id_company,
-						'id_cust' => $a->id_customer,
-						'nama_cust' => $a->nama_customer,
-						'telepon1' => $fix_telp1,
-						'telepon2' => $fix_telp2,
-						'hp' => $fix_hp,
-						'type' => $a->nama,
-						'tgl_inv' => $date,
-						'diskon' => $diskon,
-						'id_respon' => null,
-						'tipe_cust' => 2,
-						'tgl_wo' => $tglwo,
-						'tlp_wo' => $fix_tlpwo
-					);
-					$this->M_cro->add_custservkws($x);
-			}
+			// foreach ($custservkws as $a) {
+			// 	$telp1 = null;
+			// 	$telp2 = null;
+			// 	$hp = null;
+			// 	$tlpwo = null;
+			// 	if(substr($a->telepon_1,0,2) == '08'){
+			// 		$telp1 = $a->telepon_1;
+			// 	}
+			// 	if(substr($a->telepon_2,0,2) == '08'){
+			// 		$telp2 = $a->telepon_2;
+			// 	}
+			// 	if(substr($a->hp,0,2) == '08'){
+			// 		$hp = $a->hp;
+			// 	}
+			// 	if(substr($a->alamat,0,2) == '08'){
+			// 		$tlpwo = $a->alamat;
+			// 	}
+			// 	//start replace phone just integer
+			// 	$rplace_tlp1 = str_replace(' ','',$telp1);
+			// 	$fix_telp1 = str_replace('-','',$rplace_tlp1);
+			// 	$rplace_tlp2 = str_replace(' ','',$telp2);
+			// 	$fix_telp2 = str_replace('-','',$rplace_tlp2);
+			// 	$rplace_hp = str_replace(' ','',$hp);
+			// 	$fix_hp = str_replace('-','',$rplace_hp);
+			// 	$rplace_tlpwo = str_replace(' ','',$tlpwo);
+			// 	$fix_tlpwo = str_replace('-','',$rplace_tlpwo);
+			// 	//end replace phone just integer
+			// 	$ex = explode(".", $a->discount);
+			// 	$diskon = $ex[0];
+			// 	$date = date('Y-m-d',$a->date_sinv);
+			// 	$tglwo = date('Y-m-d',$a->date_so);
+			// 	$x= array(
+			// 			'tgl_surv' => null,
+			// 			'id_comp' => $a->id_company,
+			// 			'id_cust' => $a->id_customer,
+			// 			'nama_cust' => $a->nama_customer,
+			// 			'telepon1' => $fix_telp1,
+			// 			'telepon2' => $fix_telp2,
+			// 			'hp' => $fix_hp,
+			// 			'type' => $a->nama,
+			// 			'tgl_inv' => $date,
+			// 			'diskon' => $diskon,
+			// 			'id_respon' => null,
+			// 			'tipe_cust' => 2,
+			// 			'tgl_wo' => $tglwo,
+			// 			'tlp_wo' => $fix_tlpwo
+			// 		);
+			// 		$this->M_cro->add_custservkws($x);
+			// }
 		}
 		//end check data double
 		echo "<script>alert('Berhasil Tarik Data Tahun : ".$thn." & Bulan : ".@$nameMonth."');</script>";
